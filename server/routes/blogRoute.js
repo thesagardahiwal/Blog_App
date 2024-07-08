@@ -7,6 +7,6 @@ router
     .get("/blogs", getBlogs)
     .get("/blog/:blogId/details", isLoggedIn, getBlogDetails)
     .post("/blog/new", isLoggedIn, parser.single('image'), createBlog)
-
+    
 
     module.exports = router;
