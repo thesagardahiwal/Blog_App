@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Button, Navbar } from "flowbite-react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Dropdown } from "flowbite-react";
 import { isLoggedIn, logout } from '../../server/auth';
-
+import { logo } from '../../assets';
 function Nav() {
   const [userData, setUserData] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     isLoggedIn().then((data) => setUserData(data))
       .catch((err) => setUserData(null))
@@ -15,6 +15,7 @@ function Nav() {
   return (
     <Navbar fluid rounded>
       <Navbar.Brand href="/">
+        <img src={logo} alt="" height={40} width={40} />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Blog Bloger</span>
       </Navbar.Brand>
       <div className="flex gap-1 md:order-2">
@@ -27,7 +28,7 @@ function Nav() {
                 <span className="block text-sm">{userData.username}</span>
                 <span className="block truncate text-sm font-medium">{userData.email}</span>
               </Dropdown.Header>
-              <Dropdown.Item>Profile</Dropdown.Item>
+              <Dropdown.Item onClick={() => navigate(`/user-profile/${userData?._id}`)} >Profile</Dropdown.Item>
               <Dropdown.Item onClick={() => logout().then(() => setUserData(null))}>Sign out</Dropdown.Item>
             </Dropdown>
           </>

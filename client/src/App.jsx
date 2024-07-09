@@ -10,6 +10,10 @@ import Contact from './pages/Contact'
 import Login from './pages/auth/Login'
 import Signup from './pages/auth/Signup'
 import BlogDetails from './components/BlogDetails'
+import FloatingActionButton from './components/FloatingActionButton'
+import CreateBlog from './components/CreateBlog'
+import Profile from './components/Profile'
+import EditBlog from './components/EditBlog'
 
 function App() {
 
@@ -29,7 +33,11 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/:blogId/details' element={<BlogDetails />} />
+          <Route path='/create-blog' element={<CreateBlog />} />
+          <Route path='/user-profile/:id' element={<Profile />} />
+          <Route path='/edit-blog/:blogId' element={<EditBlog />} />
         </Routes>
+        <FloatingActionButton />
       </div>
       <div className='z-50'>
         <FooterC />

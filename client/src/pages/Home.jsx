@@ -1,8 +1,8 @@
-import { Carousel } from 'flowbite-react'
+import { Avatar, Carousel } from 'flowbite-react'
 import { Card } from "flowbite-react";
 import React, { useCallback, useEffect, useState } from 'react'
 import { getBlogs } from '../server/blog';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const img = "https://cdn.pixabay.com/photo/2024/03/04/16/38/cat-8612685_1280.jpg"
 const img2 = "https://cdn.pixabay.com/photo/2024/03/25/20/30/german-shorthaired-pointer-8655457_1280.jpg"
@@ -47,25 +47,50 @@ function Home() {
                 </Carousel>
             </div>
 
-            <div className='font-semibold pt-3 sm:font-bold text-xl'>
-                Blogs
-            </div>
-            <div className='flex flex-wrap mb-4 gap-1 items-center'>
-                {blogs && blogs.length > 0 && blogs.map((blog, i) => (
-                    <div key={i} className='m-2 sm:m-0'>
-                        <Card 
-                        onClick={() => handleBlog(blog)}
-                        className="max-w-lg md:h-[230px]" imgSrc={blog.media} horizontal>
-                            <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                {blog.title}
-                            </h5>
-                            <p className="font-normal text-ellipsis text-gray-700 dark:text-gray-400">
-                                {blog.content}
-                            </p>
-                        </Card>
+            <div className="bg-gray-100 py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Recent Blogs</h2>
+        <p className="mt-4 text-lg text-gray-500">
+          Discover the latest blogs from our community.
+        </p>
+        <div className="mt-12 grid gap-5 lg:grid-cols-3 lg:max-w-none">
+          {blogs?.map((blog, index) => (
+            <div key={index} className="flex flex-col rounded-lg shadow-lg overflow-hidden">
+              <div className="flex-shrink-0">
+                <img className="h-48 w-full object-cover" src={blog.media} alt={blog.title} />
+              </div>
+              <div className="flex-1 bg-white p-6 flex flex-col justify-between">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-indigo-600">
+                    <a href="#" className="hover:underline">Blog</a>
+                  </p>
+                  <Link to={`/${blog._id}/details`} className="block mt-2">
+                    <p className="text-xl font-semibold text-gray-900">{blog.title}</p>
+                    <p className="mt-3 text-base text-gray-500">{blog.content.substring(0, 100)}...</p>
+                  </Link>
+                </div>
+                <div className="mt-6 flex items-center">
+                  <div className="flex-shrink-0">
+                    <a href={`/user-profile/${blog.author?._id}`}>
+                      <span className="sr-only">Author</span>
+                      <Avatar placeholderInitials={blog.author?.username.charAt(0)} rounded />
+                    </a>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-900">
+                      <a href={`/user-profile/${blog.author?._id}`} className="hover:underline">{blog.author.username}</a>
+                    </p>
+                    <div className="flex space-x-1 text-sm text-gray-500">
+                      <time dateTime={blog.createdAt}>{new Date(blog.createdAt).toDateString()}</time>
                     </div>
-                ))}
+                  </div>
+                </div>
+              </div>
             </div>
+          ))}
+        </div>
+      </div>
+    </div>
 
         </div>
     )
