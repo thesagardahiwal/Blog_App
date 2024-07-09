@@ -1,3 +1,4 @@
+const Blog = require("../models/blogModel");
 const User = require("../models/userModel");
 
 const register = async (req, res) => {
@@ -33,6 +34,19 @@ const register = async (req, res) => {
 
 }
 
+const getUserProfile = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userDetails = await User.findById(id);
+        if (!userDetails) return res.status(400).json({message: "User is not present in database!"});
+        const blogs = await Blog.find({author: id})
+        res.status(200).json({blogs, userDetails});
+    } catch (error) {   
+        res.status(500).json({message: "Internet Problem"})
+    }
+}
+
 module.exports = {
-    register
+    register,
+    getUserProfile
 }

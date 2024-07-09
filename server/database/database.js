@@ -19,13 +19,13 @@ cloudinary.config({
 });
 
 const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-      folder: 'some-folder-name',
-      allow_formats: ["jpg", "png", "jpeg"],
-      public_id: (req, file) => `${Date.now()}-${file.originalname}`,
-    },
-  });
+  cloudinary: cloudinary,
+  params: {
+    folder: 'blog-blogger',
+    allowed_formats: ["jpg", "png", "jpeg"],
+    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
+  },
+});
 
 const parser = multer({ storage: storage });
 

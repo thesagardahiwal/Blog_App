@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { register } = require("../controllers/authController")
+const { register, getUserProfile } = require("../controllers/authController")
 const passport = require('passport');
 const { isLoggedIn } = require('../middlewares/authChecker');
 
@@ -39,6 +39,8 @@ router
             
         }
     })
+
+    .get ("/user-profile/:id", isLoggedIn, getUserProfile)
     .get("/isloggedin", isLoggedIn, (req, res) => {
         try {
             res.status(200).json(req.user);
